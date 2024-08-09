@@ -14,7 +14,7 @@ public class HistoryOrderGUI extends JFrame {
         setLayout(new BorderLayout());
 
         // Create column names for the table
-        String[] columnNames = {"Customer", "Items"};
+        String[] columnNames = {"Customer", "Items", "Status"};
         tableModel = new DefaultTableModel(columnNames, 0);
         orderTable = new JTable(tableModel);
 
@@ -29,7 +29,7 @@ public class HistoryOrderGUI extends JFrame {
             if (items.length() > 0) {
                 items.setLength(items.length() - 2);
             }
-            tableModel.addRow(new Object[]{customer.getUsername(), items.toString()});
+            tableModel.addRow(new Object[]{customer.getUsername(), items.toString(), order.getStatus()});
         }
 
         JScrollPane scrollPane = new JScrollPane(orderTable);

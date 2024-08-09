@@ -100,6 +100,7 @@ public class CartGUI extends JFrame {
 
         for (Order order : customer.getHistoryOrderList()) {
             historyDetails.append("Order for ").append(order.getCustomer().getUsername()).append(":\n");
+            historyDetails.append("Status: ").append(order.getStatus()).append("\n");
             for (MenuItem item : order.getItems()) {
                 historyDetails.append("  Item: ").append(item.getName())
                         .append(" Price: ").append(item.getPrice()).append("\n");
