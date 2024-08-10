@@ -63,6 +63,10 @@ public class Order implements Serializable{
 		this.status = "Ready for pick up";
 	}
 	
+	public void setOnTheWay() {
+		this.status = "On the way";
+	}
+	
 	public void setDelivered() {
 		this.status = "Delivered";
 	}

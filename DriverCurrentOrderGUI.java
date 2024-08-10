@@ -64,6 +64,7 @@ public class DriverCurrentOrderGUI extends JFrame {
 	private JTable tblCurrentOrder;
 	private OrderTableModel tableModel;
 	private JButton btnDeliver;
+	private JButton btnGoBack;
 
 	public DriverCurrentOrderGUI(Driver driver) {
 		this.driver = driver;
@@ -84,23 +85,34 @@ public class DriverCurrentOrderGUI extends JFrame {
         contentPane.add(scrollPane);
 		
 		btnDeliver = new JButton("Choose to set delivered");
-		btnDeliver.setBounds(136, 224, 192, 29);
+		btnDeliver.setBounds(44, 226, 192, 29);
 		contentPane.add(btnDeliver);
+		
+		btnGoBack = new JButton("Go Back");
+		btnGoBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnGoBack.setBounds(285, 226, 117, 29);
+		contentPane.add(btnGoBack);
 		btnDeliver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-                
+                delivered_Clk();
             }
 		});
 	}
 	
 	public void delivered_Clk() {
-		int selectedRow = tblCurrentOrder.getSelectedRow();
-        if (selectedRow != -1) {
-            Order selectedOrder = tableModel.getOrderAt(selectedRow);
-            tableModel.removeOrder(selectedRow);
-        } else {
-            JOptionPane.showMessageDialog(contentPane, "Please select an order to accept.", "No Selection", JOptionPane.WARNING_MESSAGE);
-        }
+	    int selectedRow = tblCurrentOrder.getSelectedRow();
+	    if (selectedRow != -1) {
+	        Order selectedOrder = tableModel.getOrderAt(selectedRow);
+	        tableModel.removeOrder(selectedRow); 
+	        selectedOrder.setDelivered(); 
+	    } else {
+	        JOptionPane.showMessageDialog(contentPane, "Please select an order to deliver.", "No Selection", JOptionPane.WARNING_MESSAGE);
+	    }
 	}
+
 
 }

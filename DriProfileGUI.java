@@ -25,6 +25,7 @@ public class DriProfileGUI extends JFrame {
 	private JLabel lblPhone;
 	private JLabel lblVehicle;
 	private Driver driver;
+	private JButton btnGoBack;
 	/**
 	 * Create the frame.
 	 */
@@ -37,9 +38,6 @@ public class DriProfileGUI extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		btnCancel.setBounds(258, 226, 117, 29);
-		contentPane.add(btnCancel);
 		
 		lblUsername = new JLabel("Username:");
 		lblUsername.setBounds(26, 37, 71, 16);
@@ -61,35 +59,37 @@ public class DriProfileGUI extends JFrame {
 		lblVehicle.setBounds(26, 149, 71, 16);
 		contentPane.add(lblVehicle);
 		
+		String[] info = DriverList.getInstance().get_profile_info(driver);
+		
 		txtUsername = new JTextField();
 		txtUsername.setBounds(109, 32, 130, 26);
 		contentPane.add(txtUsername);
 		txtUsername.setColumns(10);
-		txtUsername.setText(driver.getUserName());
+		txtUsername.setText(info[0]);
 		
 		txtPassword = new JTextField();
 		txtPassword.setColumns(10);
 		txtPassword.setBounds(109, 60, 130, 26);
 		contentPane.add(txtPassword);
-		txtPassword.setText(driver.getPassword());
+		txtPassword.setText(info[1]);
 		
 		txtName = new JTextField();
 		txtName.setColumns(10);
 		txtName.setBounds(109, 88, 130, 26);
 		contentPane.add(txtName);
-		txtName.setText(driver.getProfile().getName());
+		txtName.setText(info[2]);
 		
 		txtPhone = new JTextField();
 		txtPhone.setColumns(10);
 		txtPhone.setBounds(109, 116, 130, 26);
 		contentPane.add(txtPhone);
-		txtPhone.setText(driver.getProfile().getPhone());
+		txtPhone.setText(info[3]);
 		
 		txtVehicle = new JTextField();
 		txtVehicle.setColumns(10);
 		txtVehicle.setBounds(109, 144, 130, 26);
 		contentPane.add(txtVehicle);
-		txtVehicle.setText(driver.getProfile().getVehicle());
+		txtVehicle.setText(info[4]);
 		
 		btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
@@ -100,18 +100,25 @@ public class DriProfileGUI extends JFrame {
 		btnSave.setBounds(53, 226, 117, 29);
 		contentPane.add(btnSave);
 		
+		btnGoBack = new JButton("Go back");
+		btnGoBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnGoBack.setBounds(218, 226, 117, 29);
+		contentPane.add(btnGoBack);
+		
 		btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				cancel_Clk();
 			}
 		});
 	}
 	
 	public void save_Clk(String username, String password, String name, String phone, String vehicle) {
-		driver.setUserName(username);
-		driver.setPassword(password);
-		driver.getProfile().edit(name, phone, "NA", vehicle);
+		DriverList.getInstance().edit(driver, username, password, name, phone, vehicle);
 	}
 	
 	public void cancel_Clk() {

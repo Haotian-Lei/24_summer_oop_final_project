@@ -67,6 +67,7 @@ public class WaitAcceptGUI extends JFrame {
 	private JButton btnCurrentOrder;
 	private WaitAcceptList waitingOrders= WaitAcceptList.getInstance();
 	private OrderTableModel tableModel;
+	private JButton btnGoBack;
 	
 
 	public WaitAcceptGUI(Driver driver) {
@@ -88,7 +89,7 @@ public class WaitAcceptGUI extends JFrame {
         contentPane.add(scrollPane);
 		
 		btnAccept = new JButton("Choose to accept");
-		btnAccept.setBounds(69, 224, 137, 29);
+		btnAccept.setBounds(30, 224, 137, 29);
 		contentPane.add(btnAccept);
 		btnAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -102,8 +103,17 @@ public class WaitAcceptGUI extends JFrame {
 				currentOrder_Clk();
 			}
 		});
-		btnCurrentOrder.setBounds(254, 224, 117, 29);
+		btnCurrentOrder.setBounds(181, 224, 117, 29);
 		contentPane.add(btnCurrentOrder);
+		
+		btnGoBack = new JButton("Go Back");
+		btnGoBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnGoBack.setBounds(308, 224, 117, 29);
+		contentPane.add(btnGoBack);
 	}
 	
 	public void accept_Clk() {
@@ -111,6 +121,8 @@ public class WaitAcceptGUI extends JFrame {
         if (selectedRow != -1) {
             Order selectedOrder = tableModel.getOrderAt(selectedRow);
             tableModel.removeOrder(selectedRow);
+            selectedOrder.setOnTheWay();
+            driver.getOrders().add(selectedOrder);
         } else {
             JOptionPane.showMessageDialog(contentPane, "Please select an order to accept.", "No Selection", JOptionPane.WARNING_MESSAGE);
         }

@@ -40,6 +40,7 @@ public class DriverGUI extends JFrame {
 		btnWaitAcceptOrder = new JButton("Wait For Accept order");
 		btnWaitAcceptOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				waitAccept_Clk();
 			}
 		});
 		btnWaitAcceptOrder.setBounds(133, 106, 187, 29);
@@ -48,6 +49,7 @@ public class DriverGUI extends JFrame {
 		btnCurrentOrder = new JButton("CurrentOrder");
 		btnCurrentOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				currentOrder_Clk();
 			}
 		});
 		btnCurrentOrder.setBounds(166, 160, 117, 29);

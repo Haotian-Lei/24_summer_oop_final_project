@@ -11,16 +11,12 @@ public class WaitAcceptList implements Serializable{
     
     public static WaitAcceptList getInstance() {
         if (instance == null) {
-            synchronized (WaitAcceptList.class) {
-                if (instance == null) {
-                    instance = new WaitAcceptList();
-                }
-            }
-        }
+        	instance = new WaitAcceptList();
+        	}
         return instance;
     }
     
-    public void addWatAcceptOrder(Order order) {
+    public void addWaitAcceptOrder(Order order) {
     	orders.add(order);
     }
     
