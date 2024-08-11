@@ -95,7 +95,7 @@ public class CartGUI extends JFrame {
         restaurant.addOrder(order);
         List<Restaurant> restaurants = DataStorage.loadRestaurants("restaurants.dat");
         for (int i = 0; i < restaurants.size(); i++) {
-            if (restaurants.get(i).getUsername().equals(customer.getUsername())) {
+            if (restaurants.get(i).getUsername().equals(restaurant.getUsername())) {
                 restaurants.set(i, restaurant);
                 break;
             }
