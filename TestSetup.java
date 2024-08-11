@@ -1,9 +1,13 @@
 import javax.swing.*;
+import java.io.*;
 
 public class TestSetup {
     public static void main(String[] args) {
         // Initialize test data
-        DataStorage.initializeTestData("customers.dat", "restaurants.dat", "drivers.dat", "waitAcceptList.dat");
+    	File f = new File("customers.dat");
+    	if(!f.exists()) {
+    		DataStorage.initializeTestData("customers.dat", "restaurants.dat", "drivers.dat", "waitAcceptList.dat");
+    	}
         // Create CustomerList and RestaurantList instances
         CustomerList customerList = new CustomerList();
         RestaurantList restaurantList = new RestaurantList();

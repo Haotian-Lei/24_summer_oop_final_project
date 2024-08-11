@@ -2,11 +2,15 @@ import java.util.*;
 import java.io.*;
 
 public class Order implements Serializable{
+	private static final long serialVersionUID = -4828444138045625234L;
+	private static int count = 1;
 	private ArrayList<OrderItem> items;
+	private int id;
 	private String status = "N/A";
 	private String origin = "N/A";
 	private String destination = "N/A";
 	public Order() {
+		this.id = count++;
 		this.items = new ArrayList<OrderItem>();
 	}
 	public String getOrigin() {
@@ -93,6 +97,23 @@ public class Order implements Serializable{
 		}
 		return str;
 	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+	    if (this == o) {
+	        return true; 
+	    }
+	    if (o == null || getClass() != o.getClass()) {
+	        return false;
+	    }
+	    Order other = (Order) o;
+	    return this.getId() == other.getId();
+	}
+
 	
 	
 }

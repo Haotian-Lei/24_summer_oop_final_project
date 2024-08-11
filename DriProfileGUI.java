@@ -40,7 +40,7 @@ public class DriProfileGUI extends JFrame {
 		contentPane.setLayout(null);
 		
 		lblUsername = new JLabel("Username(inalterable):");
-		lblUsername.setBounds(26, 37, 71, 16);
+		lblUsername.setBounds(26, 37, 165, 16);
 		contentPane.add(lblUsername);
 		
 		lblPassword = new JLabel("Password:");
@@ -61,32 +61,32 @@ public class DriProfileGUI extends JFrame {
 		
 		
 		txtUsername = new JTextField();
-		txtUsername.setBounds(109, 32, 130, 26);
+		txtUsername.setBounds(235, 32, 130, 26);
 		contentPane.add(txtUsername);
 		txtUsername.setColumns(10);
 		txtUsername.setText(driver.getUserName());
 		
 		txtPassword = new JTextField();
 		txtPassword.setColumns(10);
-		txtPassword.setBounds(109, 60, 130, 26);
+		txtPassword.setBounds(235, 60, 130, 26);
 		contentPane.add(txtPassword);
 		txtPassword.setText(driver.getPassword());
 		
 		txtName = new JTextField();
 		txtName.setColumns(10);
-		txtName.setBounds(109, 88, 130, 26);
+		txtName.setBounds(235, 88, 130, 26);
 		contentPane.add(txtName);
 		txtName.setText(driver.getProfile().getName());
 		
 		txtPhone = new JTextField();
 		txtPhone.setColumns(10);
-		txtPhone.setBounds(109, 116, 130, 26);
+		txtPhone.setBounds(235, 116, 130, 26);
 		contentPane.add(txtPhone);
 		txtPhone.setText(driver.getProfile().getPhone());
 		
 		txtVehicle = new JTextField();
 		txtVehicle.setColumns(10);
-		txtVehicle.setBounds(109, 144, 130, 26);
+		txtVehicle.setBounds(235, 144, 130, 26);
 		contentPane.add(txtVehicle);
 		txtVehicle.setText(driver.getProfile().getVehicle());
 		

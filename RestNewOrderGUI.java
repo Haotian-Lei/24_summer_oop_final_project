@@ -2,7 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -96,21 +96,80 @@ public class RestNewOrderGUI extends JFrame {
     }
     //all by open new gui to update changes
     private void accept_Clk() {
-    	this.restaurant.getOrderList().getSingleOrder(rowSelected).setConfirmed();
-    	RestNewOrderGUI rnogu = new RestNewOrderGUI(this.restaurant);
-    	rnogu.setVisible(true);
+        Order target = this.restaurant.getOrderList().getSingleOrder(rowSelected);
+        target.setConfirmed();
+        target.setOrigin(restaurant.getProfile().getLocation());
+
+        // Update order status to customers
+        List<Customer> customers = DataStorage.loadCustomers("customers.dat");
+        for (Customer customer : customers) {
+            List<Order> currentOrders = customer.getHistoryOrderList();
+            for (int j = 0; j < currentOrders.size(); j++) {
+                Order order = currentOrders.get(j);
+                if (order.equals(target)) {
+                    currentOrders.set(j, target);  // Update the correct index
+                }
+            }
+        }
+        DataStorage.saveCustomers(customers, "customers.dat");
+
+        List<Order> waitings = DataStorage.loadWaitAcceptList("waitAcceptList.dat");
+        waitings.add(target);
+        DataStorage.saveWaitAcceptList("waitAcceptList.dat", waitings);
+
+        List<Restaurant> restaurants = DataStorage.loadRestaurants("restaurants.dat");
+        for (int i = 0; i < restaurants.size(); i++) {
+            if (restaurants.get(i).getUsername().equals(restaurant.getUsername())) {
+                restaurants.set(i, restaurant);
+                break;
+            }
+        }
+        DataStorage.saveRestaurants("restaurants.dat", restaurants);
+
+        RestNewOrderGUI rnogu = new RestNewOrderGUI(this.restaurant);
+        rnogu.setVisible(true);
+        dispose();
     }
+
+    
     private void decline_Clk() {
-    	this.restaurant.getOrderList().getSingleOrder(rowSelected).setDeclined();
+    	Order target = this.restaurant.getOrderList().getSingleOrder(rowSelected);
+    	target.setDeclined();
+    	
+    	//update order status to customers
+    	List<Customer> customers = DataStorage.loadCustomers("customers.dat");
+        for (Customer customer : customers) {
+            List<Order> currentOrders = customer.getHistoryOrderList();
+            for (int j = 0; j < currentOrders.size(); j++) {
+                Order order = currentOrders.get(j);
+                if (order.equals(target)) {
+                    currentOrders.set(j, target);  // Update the correct index
+                }
+            }
+        }
+        DataStorage.saveCustomers(customers, "customers.dat");
+    	
+    	List<Restaurant> restaurants = DataStorage.loadRestaurants("restaurants.dat");
+        for (int i = 0; i < restaurants.size(); i++) {
+            if (restaurants.get(i).getUsername().equals(restaurant.getUsername())) {
+                restaurants.set(i, restaurant);
+                break;
+            }
+        }
+        DataStorage.saveRestaurants("restaurants.dat",restaurants);
+        
     	RestNewOrderGUI rnogu = new RestNewOrderGUI(this.restaurant);
     	rnogu.setVisible(true);
+    	dispose();
     }
     private void history_Clk() {
     	RestOrderHistoryGUI rohgu = new RestOrderHistoryGUI(this.restaurant);
     	rohgu.setVisible(true);
+    	dispose();
     }
     private void cancel_Clk() {
     	RestOrderGUI rogu = new RestOrderGUI(this.restaurant);
     	rogu.setVisible(true);
+    	dispose();
     }
 }

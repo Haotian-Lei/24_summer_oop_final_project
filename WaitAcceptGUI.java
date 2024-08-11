@@ -123,6 +123,31 @@ public class WaitAcceptGUI extends JFrame {
             Order selectedOrder = tableModel.getOrderAt(selectedRow);
             tableModel.removeOrder(selectedRow);
             selectedOrder.setOnTheWay();
+            List<Customer> customers = DataStorage.loadCustomers("customers.dat");
+            for (Customer customer : customers) {
+                List<Order> currentOrders = customer.getHistoryOrderList();
+                for (int j = 0; j < currentOrders.size(); j++) {
+                    Order order = currentOrders.get(j);
+                    if (order.equals(selectedOrder)) {
+                        currentOrders.set(j, selectedOrder);  // Update the correct index
+                    }
+                }
+            }
+            DataStorage.saveCustomers(customers, "customers.dat");
+
+
+            List<Restaurant> restaurants = DataStorage.loadRestaurants("restaurants.dat");
+            for (Restaurant res : restaurants) {
+                List<Order> currentOrders = res.getOrderList().getOrders();
+                for (int j = 0; j < currentOrders.size(); j++) {
+                    Order order = currentOrders.get(j);
+                    if (order.equals(selectedOrder)) {
+                        currentOrders.set(j, selectedOrder);  // Update the correct index
+                    }
+                }
+            }
+            DataStorage.saveRestaurants("restaurants.dat", restaurants);
+    		
             waitingOrders.delete(selectedOrder);
             DataStorage.saveWaitAcceptList("waitAcceptList.dat", waitingOrders.getList());
             

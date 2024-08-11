@@ -111,14 +111,40 @@ public class DriverCurrentOrderGUI extends JFrame {
 	        selectedOrder.setDelivered(); 
 	        driver.getOrders().remove(selectedOrder);
 	        
-	        List<Driver> drivers = DataStorage.loadDrivers("drivers.dat");
-	        for (int i = 0; i < drivers.size(); i++) {
-	            if (drivers.get(i).getUserName().equals(driver.getUserName())) {
-	                drivers.set(i, driver);
-	                break;
-	            }
-	        }
-	        DataStorage.saveDrivers("drivers.dat", drivers);
+	        List<Customer> customers = DataStorage.loadCustomers("customers.dat");
+            for (Customer customer : customers) {
+                List<Order> currentOrders = customer.getHistoryOrderList();
+                for (int j = 0; j < currentOrders.size(); j++) {
+                    Order order = currentOrders.get(j);
+                    if (order.equals(selectedOrder)) {
+                        currentOrders.set(j, selectedOrder);  // Update the correct index
+                    }
+                }
+            }
+            DataStorage.saveCustomers(customers, "customers.dat");
+
+
+            List<Restaurant> restaurants = DataStorage.loadRestaurants("restaurants.dat");
+            for (Restaurant res : restaurants) {
+                List<Order> currentOrders = res.getOrderList().getOrders();
+                for (int j = 0; j < currentOrders.size(); j++) {
+                    Order order = currentOrders.get(j);
+                    if (order.equals(selectedOrder)) {
+                        currentOrders.set(j, selectedOrder);  // Update the correct index
+                    }
+                }
+            }
+            DataStorage.saveRestaurants("restaurants.dat", restaurants);
+            
+            driver.getOrders().add(selectedOrder);
+            List<Driver> drivers = DataStorage.loadDrivers("drivers.dat");
+            for (int i = 0; i < drivers.size(); i++) {
+                if (drivers.get(i).getUserName().equals(driver.getUserName())) {
+                    drivers.set(i, driver);
+                    break;
+                }
+            }
+            DataStorage.saveDrivers("drivers.dat", drivers);
 	    } else {
 	        JOptionPane.showMessageDialog(contentPane, "Please select an order to deliver.", "No Selection", JOptionPane.WARNING_MESSAGE);
 	    }

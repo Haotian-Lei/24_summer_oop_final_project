@@ -76,12 +76,41 @@ public class RestOrderHistoryGUI extends JFrame {
         setVisible(true);
 	}
 	private void readyPickup_Clk() {
-		this.restaurant.getOrderList().getSingleOrder(rowSelected).setReadyPickUp();
+		Order target = this.restaurant.getOrderList().getSingleOrder(rowSelected);
+        target.setReadyPickUp();;
+        target.setOrigin(restaurant.getProfile().getLocation());
+
+        // Update order status to customers
+        List<Customer> customers = DataStorage.loadCustomers("customers.dat");
+        for (Customer customer : customers) {
+            List<Order> currentOrders = customer.getHistoryOrderList();
+            for (int j = 0; j < currentOrders.size(); j++) {
+                Order order = currentOrders.get(j);
+                if (order.equals(target)) {
+                    currentOrders.set(j, target);  // Update the correct index
+                }
+            }
+        }
+        DataStorage.saveCustomers(customers, "customers.dat");
+
+        List<Order> waitings = DataStorage.loadWaitAcceptList("waitAcceptList.dat");
+        waitings.add(target);
+        DataStorage.saveWaitAcceptList("waitAcceptList.dat", waitings);
+
+        List<Restaurant> restaurants = DataStorage.loadRestaurants("restaurants.dat");
+        for (int i = 0; i < restaurants.size(); i++) {
+            if (restaurants.get(i).getUsername().equals(restaurant.getUsername())) {
+                restaurants.set(i, restaurant);
+                break;
+            }
+        }
+        DataStorage.saveRestaurants("restaurants.dat", restaurants);
 		RestOrderHistoryGUI rohgu = new RestOrderHistoryGUI(this.restaurant);
 		rohgu.setVisible(true);
 	}
 	private void cancel_Clk() {
 		RestOrderGUI rogu = new RestOrderGUI(this.restaurant);
     	rogu.setVisible(true);
+    	dispose();
 	}
 }

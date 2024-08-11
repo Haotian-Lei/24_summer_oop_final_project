@@ -149,11 +149,11 @@ public class DataStorage {
         
 		List<Driver> drivers = new ArrayList<Driver>();
 		Profile dp1 = new Profile("Sophia", "3129876543", "NA", "bicycle");
-		Driver d1 = new Driver("SophiaRider", "060799", dp1);
+		Driver d1 = new Driver("Sophia", "password111", dp1);
 		Profile dp2 = new Profile("Jackson", "7184567890", "NA", "car");
-		Driver d2 = new Driver("JackOnWheels", "112588", dp2);
+		Driver d2 = new Driver("Jackson", "password222", dp2);
 		Profile dp3 = new Profile("Olivia", "5101234567", "NA", "scooter");
-		Driver d3 = new Driver("LivScoot", "091201", dp3);
+		Driver d3 = new Driver("Olivia", "password333", dp3);
 		
 		drivers.add(d1);
 		drivers.add(d2);

@@ -90,7 +90,6 @@ public class CartGUI extends JFrame {
             }
         }
         DataStorage.saveCustomers(customers, "customers.dat");
-        JOptionPane.showMessageDialog(CartGUI.this, "Order placed and added to history successfully.");
 
         restaurant.addOrder(order);
         List<Restaurant> restaurants = DataStorage.loadRestaurants("restaurants.dat");
@@ -101,8 +100,8 @@ public class CartGUI extends JFrame {
             }
         }
         DataStorage.saveRestaurants("restaurants.dat",restaurants);
-
-
+        
+        JOptionPane.showMessageDialog(CartGUI.this, "Order placed and added to history successfully.");
         // Optionally, close the CartGUI window
         dispose();
     }

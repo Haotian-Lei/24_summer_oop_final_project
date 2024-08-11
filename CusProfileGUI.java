@@ -14,10 +14,10 @@ public class CusProfileGUI extends JFrame {
         setTitle("Customer Profile");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLayout(new GridLayout(6, 2));
+        getContentPane().setLayout(new GridLayout(6, 2));
 
         // Initialize components
-        lblUserName = new JLabel("Username:");
+        lblUserName = new JLabel("Username(inalterable):");
         lblPassword = new JLabel("Password:");
         lblName = new JLabel("Name:");
         lblPhone = new JLabel("Phone:");
@@ -33,18 +33,18 @@ public class CusProfileGUI extends JFrame {
         JButton cancelButton = new JButton("Cancel");
 
         // Add components to frame
-        add(lblUserName);
-        add(txtUserName);
-        add(lblPassword);
-        add(txtPassword);
-        add(lblName);
-        add(txtName);
-        add(lblPhone);
-        add(txtPhone);
-        add(lblLocation);
-        add(txtLocation);
-        add(saveButton);
-        add(cancelButton);
+        getContentPane().add(lblUserName);
+        getContentPane().add(txtUserName);
+        getContentPane().add(lblPassword);
+        getContentPane().add(txtPassword);
+        getContentPane().add(lblName);
+        getContentPane().add(txtName);
+        getContentPane().add(lblPhone);
+        getContentPane().add(txtPhone);
+        getContentPane().add(lblLocation);
+        getContentPane().add(txtLocation);
+        getContentPane().add(saveButton);
+        getContentPane().add(cancelButton);
 
         // Set up action listeners for buttons
         saveButton.addActionListener(new ActionListener() {
