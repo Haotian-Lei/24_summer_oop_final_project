@@ -6,7 +6,9 @@ public class Order implements Serializable{
 	private String status = "N/A";
 	private String origin = "N/A";
 	private String destination = "N/A";
-	
+	public Order() {
+		this.items = new ArrayList<OrderItem>();
+	}
 	public String getOrigin() {
 		return origin;
 	}
@@ -22,14 +24,23 @@ public class Order implements Serializable{
 	public void setDestination(String destination) {
 		this.destination = destination;
 	}
-
-	public Order() {
-		this.items = new ArrayList<OrderItem>();
-	}
 	
+	
+	//??????????
 	public void add(OrderItem new_oi) {
 		for(OrderItem oi: items) {
 			if(oi.equals(new_oi)) {
+				oi.increment();
+				return;
+			}
+		}
+		items.add(new_oi);
+		return;
+	}
+	//for Yukying's code 
+	public void add1(OrderItem new_oi) {
+		for(OrderItem oi: items) {
+			if(oi.getName().equals(new_oi.getName())) {
 				oi.increment();
 				return;
 			}
@@ -70,7 +81,16 @@ public class Order implements Serializable{
 	public void setDelivered() {
 		this.status = "Delivered";
 	}
-	
+	public void setDeclined() {
+		this.status = "Declined";
+	}
+	public String getAllOrderitems_info(){
+		String str = "";
+		for (OrderItem oi:items) {
+			str+= oi.getName()+" "+oi.getQuantity()+"|";
+		}
+		return str;
+	}
 	
 	
 }
