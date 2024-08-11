@@ -1,4 +1,6 @@
 import java.io.*;
+
+import selfpart_final_project_oop.Menu;
 public class Restaurant implements Serializable {
 	private String username;
 	private String password;
@@ -10,6 +12,7 @@ public class Restaurant implements Serializable {
 		this.password = password;
 		this.profile = profile;
 		this.resOrderList = new OrderList();
+		this.menu = new Menu();
 	}
 	public String getUsername() {
 		return this.username;
