@@ -71,10 +71,7 @@ public class MainGUI extends JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Login failed. Invalid username or password.");
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Only customers can log in from this screen.");
         }
-
         if (type.equals("Restaurant")) {
             //Customer customer = customerList.verify(userName, password);
             Restaurant restaurant = restaurantList.Verify(userName, password);
@@ -86,8 +83,6 @@ public class MainGUI extends JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Login failed. Invalid username or password.");
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Only customers can log in from this screen.");
         }
     }
 }

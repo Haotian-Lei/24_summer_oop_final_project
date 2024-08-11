@@ -64,9 +64,16 @@ public class DataStorage {
             e.printStackTrace();
         }
     }
+
     // Initialize test data
     public static void initializeTestData(String customerFileName, String restaurantFileName) {
         // Initialize Customers
+        File customerFile = new File(customerFileName);
+        File restaurantFile = new File(restaurantFileName);
+
+        if (customerFile.exists() && restaurantFile.exists()) {
+            return; // 文件已存在，跳过初始化
+        }
         List<Customer> customers = new ArrayList<>();
         customers.add(new Customer("alice", "password123", new Profile("Alice", "123-456-7890", "Alice's Location", "Car")));
         customers.add(new Customer("bob", "password456", new Profile("Bob", "234-567-8901", "Bob's Location", "Bike")));

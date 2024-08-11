@@ -3,6 +3,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class CartGUI extends JFrame {
     private JTable tblOrder;
@@ -79,9 +80,28 @@ public class CartGUI extends JFrame {
 
         // Update order status and add to customer's history order list
         order.setPaid(); // or another appropriate status
+        order.setDestination(customer.getProfile().getLocation());
         customer.addOrderToHistory(order);
-
+        List<Customer> customers = DataStorage.loadCustomers("customers.dat");
+        for (int i = 0; i < customers.size(); i++) {
+            if (customers.get(i).getUsername().equals(customer.getUsername())) {
+                customers.set(i, customer);
+                break;
+            }
+        }
+        DataStorage.saveCustomers(customers, "customers.dat");
         JOptionPane.showMessageDialog(CartGUI.this, "Order placed and added to history successfully.");
+
+        restaurant.addOrder(order);
+        List<Restaurant> restaurants = DataStorage.loadRestaurants("restaurants.dat");
+        for (int i = 0; i < restaurants.size(); i++) {
+            if (restaurants.get(i).getUsername().equals(customer.getUsername())) {
+                restaurants.set(i, restaurant);
+                break;
+            }
+        }
+        DataStorage.saveRestaurants("restaurants.dat",restaurants);
+
 
         // Optionally, close the CartGUI window
         dispose();
