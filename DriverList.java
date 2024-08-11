@@ -3,20 +3,12 @@ import java.io.*;
 
 public class DriverList implements Serializable {
     private ArrayList<Driver> drivers;
-    private static DriverList instance;
 
-    private DriverList() {
+    public DriverList() {
         this.drivers = new ArrayList<>();
     }
 
-    public static DriverList getInstance() {
-        if (instance == null) {
-            instance = new DriverList();
-        }
-        return instance;
-    }
-
-    public void add(Driver d) {
+    public void addDriver(Driver d) {
         this.drivers.add(d);
     }
 
@@ -28,17 +20,7 @@ public class DriverList implements Serializable {
         }
         return null;
     }
-    
-    public String[] get_profile_info(Driver driver) {
-    	String[] result = {driver.getUserName(),driver.getPassword(),driver.getProfile().getName(),driver.getProfile().getPhone(),driver.getProfile().getVehicle()};
-    	return result;
-    }
-    
-    public void edit(Driver driver,String username,String password, 
-    		String name,String phone,String vehicle) {
-    	driver.setUserName(username);
-		driver.setPassword(password);
-		driver.getProfile().edit(name, phone, "NA", vehicle);
-    }
 }
+
+
 

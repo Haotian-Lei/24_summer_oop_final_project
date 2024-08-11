@@ -109,6 +109,16 @@ public class DriverCurrentOrderGUI extends JFrame {
 	        Order selectedOrder = tableModel.getOrderAt(selectedRow);
 	        tableModel.removeOrder(selectedRow); 
 	        selectedOrder.setDelivered(); 
+	        driver.getOrders().remove(selectedOrder);
+	        
+	        List<Driver> drivers = DataStorage.loadDrivers("drivers.dat");
+	        for (int i = 0; i < drivers.size(); i++) {
+	            if (drivers.get(i).getUserName().equals(driver.getUserName())) {
+	                drivers.set(i, driver);
+	                break;
+	            }
+	        }
+	        DataStorage.saveDrivers("drivers.dat", drivers);
 	    } else {
 	        JOptionPane.showMessageDialog(contentPane, "Please select an order to deliver.", "No Selection", JOptionPane.WARNING_MESSAGE);
 	    }

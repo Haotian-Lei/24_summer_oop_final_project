@@ -1,5 +1,5 @@
 import java.awt.EventQueue;
-
+import java.util.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -39,7 +39,7 @@ public class DriProfileGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		lblUsername = new JLabel("Username:");
+		lblUsername = new JLabel("Username(inalterable):");
 		lblUsername.setBounds(26, 37, 71, 16);
 		contentPane.add(lblUsername);
 		
@@ -59,37 +59,36 @@ public class DriProfileGUI extends JFrame {
 		lblVehicle.setBounds(26, 149, 71, 16);
 		contentPane.add(lblVehicle);
 		
-		String[] info = DriverList.getInstance().get_profile_info(driver);
 		
 		txtUsername = new JTextField();
 		txtUsername.setBounds(109, 32, 130, 26);
 		contentPane.add(txtUsername);
 		txtUsername.setColumns(10);
-		txtUsername.setText(info[0]);
+		txtUsername.setText(driver.getUserName());
 		
 		txtPassword = new JTextField();
 		txtPassword.setColumns(10);
 		txtPassword.setBounds(109, 60, 130, 26);
 		contentPane.add(txtPassword);
-		txtPassword.setText(info[1]);
+		txtPassword.setText(driver.getPassword());
 		
 		txtName = new JTextField();
 		txtName.setColumns(10);
 		txtName.setBounds(109, 88, 130, 26);
 		contentPane.add(txtName);
-		txtName.setText(info[2]);
+		txtName.setText(driver.getProfile().getName());
 		
 		txtPhone = new JTextField();
 		txtPhone.setColumns(10);
 		txtPhone.setBounds(109, 116, 130, 26);
 		contentPane.add(txtPhone);
-		txtPhone.setText(info[3]);
+		txtPhone.setText(driver.getProfile().getPhone());
 		
 		txtVehicle = new JTextField();
 		txtVehicle.setColumns(10);
 		txtVehicle.setBounds(109, 144, 130, 26);
 		contentPane.add(txtVehicle);
-		txtVehicle.setText(info[4]);
+		txtVehicle.setText(driver.getProfile().getVehicle());
 		
 		btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
@@ -118,7 +117,19 @@ public class DriProfileGUI extends JFrame {
 	}
 	
 	public void save_Clk(String username, String password, String name, String phone, String vehicle) {
-		DriverList.getInstance().edit(driver, username, password, name, phone, vehicle);
+		driver.setUserName(username);
+		driver.setPassword(password);
+		driver.getProfile().edit(name, phone, "NA", vehicle);
+		
+		List<Driver> drivers = DataStorage.loadDrivers("drivers.dat");
+        for (int i = 0; i < drivers.size(); i++) {
+            if (drivers.get(i).getUserName().equals(driver.getUserName())) {
+                drivers.set(i, driver);
+                break;
+            }
+        }
+        DataStorage.saveDrivers("drivers.dat", drivers);
+        dispose();
 	}
 	
 	public void cancel_Clk() {

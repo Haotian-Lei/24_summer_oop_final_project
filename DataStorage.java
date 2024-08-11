@@ -30,6 +30,26 @@ public class DataStorage {
         }
         return restaurants;
     }
+    
+    public static List<Driver> loadDrivers(String fileName) {
+        List<Driver> drivers = new ArrayList<>();
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            drivers = (List<Driver>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return drivers;
+    }
+    
+    public static List<Order> loadWaitAcceptList(String fileName) {
+        List<Order> orders = new ArrayList<>();
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            orders = (List<Order>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
 
     // Load list of customers from a binary file
     public static void loadCustomers1(String fileName, CustomerList customerList) {
@@ -53,7 +73,36 @@ public class DataStorage {
             e.printStackTrace();
         }
     }
+    
+    public static void loadDrivers1(String fileName, DriverList driverList) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            List<Driver> drivers = (List<Driver>) ois.readObject();
+            for (Driver driver : drivers) {
+                driverList.addDriver(driver);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void loadWaitAcceptList1(String fileName, WaitAcceptList wal) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            List<Order> orders = (List<Order>) ois.readObject();
+            for (Order o : orders) {
+                wal.addWaitAcceptOrder(o);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public static void saveDrivers(String fileName, List<Driver> drivers) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(drivers);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -64,16 +113,17 @@ public class DataStorage {
             e.printStackTrace();
         }
     }
-
-    // Initialize test data
-    public static void initializeTestData(String customerFileName, String restaurantFileName) {
-        // Initialize Customers
-        File customerFile = new File(customerFileName);
-        File restaurantFile = new File(restaurantFileName);
-
-        if (customerFile.exists() && restaurantFile.exists()) {
-            return; // 文件已存在，跳过初始化
+    
+    public static void saveWaitAcceptList(String fileName, List<Order> orders) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(orders);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
+    // Initialize test data
+    public static void initializeTestData(String customerFileName, String restaurantFileName, String driverFileName, String walFileName) {
+        // Initialize Customers
         List<Customer> customers = new ArrayList<>();
         customers.add(new Customer("alice", "password123", new Profile("Alice", "123-456-7890", "Alice's Location", "Car")));
         customers.add(new Customer("bob", "password456", new Profile("Bob", "234-567-8901", "Bob's Location", "Bike")));
@@ -96,6 +146,24 @@ public class DataStorage {
         restaurants.add(restaurant2);
 
         saveRestaurants(restaurantFileName, restaurants);
+        
+		List<Driver> drivers = new ArrayList<Driver>();
+		Profile dp1 = new Profile("Sophia", "3129876543", "NA", "bicycle");
+		Driver d1 = new Driver("SophiaRider", "060799", dp1);
+		Profile dp2 = new Profile("Jackson", "7184567890", "NA", "car");
+		Driver d2 = new Driver("JackOnWheels", "112588", dp2);
+		Profile dp3 = new Profile("Olivia", "5101234567", "NA", "scooter");
+		Driver d3 = new Driver("LivScoot", "091201", dp3);
+		
+		drivers.add(d1);
+		drivers.add(d2);
+		drivers.add(d3);
+		
+		saveDrivers(driverFileName, drivers);
+		
+		List<Order> wal = new ArrayList<Order>();
+		saveWaitAcceptList(walFileName, wal);
     }
 
 }
+

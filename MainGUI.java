@@ -13,10 +13,12 @@ public class MainGUI extends JFrame {
     private JTextField txtPassword;
     private CustomerList customerList;
     private RestaurantList restaurantList;
+    private DriverList driverList;
 
-    public MainGUI(CustomerList customerList, RestaurantList restaurantList) {
+    public MainGUI(CustomerList customerList, RestaurantList restaurantList, DriverList driverList) {
         this.customerList = customerList;
         this.restaurantList = restaurantList;
+        this.driverList = driverList;
 
         // Initialize components
         roleSelect = new JComboBox<>(new String[]{"Customer", "Driver", "Restaurant"});
@@ -72,6 +74,7 @@ public class MainGUI extends JFrame {
                 JOptionPane.showMessageDialog(this, "Login failed. Invalid username or password.");
             }
         }
+
         if (type.equals("Restaurant")) {
             //Customer customer = customerList.verify(userName, password);
             Restaurant restaurant = restaurantList.Verify(userName, password);
@@ -84,8 +87,17 @@ public class MainGUI extends JFrame {
                 JOptionPane.showMessageDialog(this, "Login failed. Invalid username or password.");
             }
         }
+        
+        if (type.equals("Driver")) {
+            Driver driver = driverList.verify(userName, password);
+            if (driver != null) {
+                JOptionPane.showMessageDialog(this, "Login successful!");
+                DriverGUI dgu = new DriverGUI(driver);
+                dgu.setVisible(true);
+                this.dispose(); // Close the login window
+            } else {
+                JOptionPane.showMessageDialog(this, "Login failed. Invalid username or password.");
+            }
+        }
     }
 }
-
-
-

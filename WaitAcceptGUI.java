@@ -65,7 +65,7 @@ public class WaitAcceptGUI extends JFrame {
 	private Driver driver;
 	private JButton btnAccept;
 	private JButton btnCurrentOrder;
-	private WaitAcceptList waitingOrders= WaitAcceptList.getInstance();
+	private WaitAcceptList waitingOrders = new WaitAcceptList();
 	private OrderTableModel tableModel;
 	private JButton btnGoBack;
 	
@@ -80,6 +80,7 @@ public class WaitAcceptGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		DataStorage.loadWaitAcceptList1("waitAcceptList.dat", waitingOrders);
 		tableModel = new OrderTableModel(waitingOrders.getList());
         tblWaitAcceptOrder = new JTable(tableModel);
         tblWaitAcceptOrder.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -122,7 +123,19 @@ public class WaitAcceptGUI extends JFrame {
             Order selectedOrder = tableModel.getOrderAt(selectedRow);
             tableModel.removeOrder(selectedRow);
             selectedOrder.setOnTheWay();
+            waitingOrders.delete(selectedOrder);
+            DataStorage.saveWaitAcceptList("waitAcceptList.dat", waitingOrders.getList());
+            
+            
             driver.getOrders().add(selectedOrder);
+            List<Driver> drivers = DataStorage.loadDrivers("drivers.dat");
+            for (int i = 0; i < drivers.size(); i++) {
+                if (drivers.get(i).getUserName().equals(driver.getUserName())) {
+                    drivers.set(i, driver);
+                    break;
+                }
+            }
+            DataStorage.saveDrivers("drivers.dat", drivers);
         } else {
             JOptionPane.showMessageDialog(contentPane, "Please select an order to accept.", "No Selection", JOptionPane.WARNING_MESSAGE);
         }

@@ -2,18 +2,10 @@ import java.util.*;
 import java.io.*;
 
 public class WaitAcceptList implements Serializable{
-	private static WaitAcceptList instance;
     private List<Order> orders;
 
-    private WaitAcceptList() {
+    public WaitAcceptList() {
         orders = new ArrayList<Order>();
-    }
-    
-    public static WaitAcceptList getInstance() {
-        if (instance == null) {
-        	instance = new WaitAcceptList();
-        	}
-        return instance;
     }
     
     public void addWaitAcceptOrder(Order order) {
