@@ -9,7 +9,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+import java.util.*;
 public class RestProfileGUI extends JFrame {
 
 	
@@ -37,8 +37,8 @@ public class RestProfileGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		lblUserName = new JLabel("Username:");
-		lblUserName.setBounds(31, 24, 74, 16);
+		lblUserName = new JLabel("Username(inalterable):");
+		lblUserName.setBounds(31, 24, 181, 16);
 		contentPane.add(lblUserName);
 		
 		lblPassword = new JLabel("Password:");
@@ -58,27 +58,27 @@ public class RestProfileGUI extends JFrame {
 		contentPane.add(lblLocation);
 		
 		txtUserName = new JTextField(this.restaurant.getUsername());
-		txtUserName.setBounds(117, 19, 225, 26);
+		txtUserName.setBounds(184, 19, 225, 26);
 		contentPane.add(txtUserName);
 		txtUserName.setColumns(10);
 		
 		txtPassword = new JTextField(this.restaurant.getPassword());
-		txtPassword.setBounds(117, 47, 225, 26);
+		txtPassword.setBounds(184, 47, 225, 26);
 		contentPane.add(txtPassword);
 		txtPassword.setColumns(10);
 		
 		txtName = new JTextField(this.restaurant.getProfile().getName());
-		txtName.setBounds(117, 75, 225, 26);
+		txtName.setBounds(184, 75, 225, 26);
 		contentPane.add(txtName);
 		txtName.setColumns(10);
 		
 		txtPhone = new JTextField(this.restaurant.getProfile().getPhone());
-		txtPhone.setBounds(117, 103, 225, 26);
+		txtPhone.setBounds(184, 103, 225, 26);
 		contentPane.add(txtPhone);
 		txtPhone.setColumns(10);
 		
 		txtLocation = new JTextField(this.restaurant.getProfile().getLocation());
-		txtLocation.setBounds(117, 131, 225, 26);
+		txtLocation.setBounds(184, 131, 225, 26);
 		contentPane.add(txtLocation);
 		txtLocation.setColumns(10);
 		
@@ -102,6 +102,16 @@ public class RestProfileGUI extends JFrame {
 	}
 	private void save_Clk() {
 		this.restaurant.edit(txtUserName.getText(),txtPassword.getText(),txtName.getText(),txtPhone.getText(),txtLocation.getText());
+		//save updated list by fist retrieve the old one then replace by the new one
+		List<Restaurant> restaurants = DataStorage.loadRestaurants("restaurants.dat");
+		for (int i = 0; i < restaurants.size(); i++) {
+            if (restaurants.get(i).getUsername().equals(this.restaurant.getUsername())) {
+                restaurants.set(i, this.restaurant);
+                break;
+            }
+        }
+		DataStorage.saveRestaurants("restaurants.dat",restaurants);
+		
 		RestGUI rgu = new RestGUI(this.restaurant);
 		rgu.setVisible(true);
 	}
