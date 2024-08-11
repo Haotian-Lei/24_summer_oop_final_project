@@ -1,41 +1,46 @@
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.io.*;
 public class Restaurant implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private String name;
-    private List<MenuItem> menu;
-    private List<Order> newOrderList;
-
-    public Restaurant(String name) {
-        this.name = name;
-        this.menu = new ArrayList<>();
-        this.newOrderList = new ArrayList<>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<MenuItem> getMenu() {
-        return menu;
-    }
-
-    public void addMenuItem(MenuItem item) {
-        menu.add(item);
-    }
-
-    public List<Order> getNewOrderList() {
-        return newOrderList;
-    }
-
-    public void addOrder(Order order) {
-        newOrderList.add(order);
-    }
-
-    @Override
-    public String toString() {
-        return "Restaurant{name='" + name + "', menu=" + menu + ", newOrderList=" + newOrderList + '}';
-    }
+	private String username;
+	private String password;
+	private Profile profile;
+	private Menu menu;
+	private OrderList resOrderList;
+	public Restaurant(String username, String password, Profile profile) {
+		this.username = username;
+		this.password = password;
+		this.profile = profile;
+		this.resOrderList = new OrderList();
+	}
+	public String getUsername() {
+		return this.username;
+	}
+	public String getPassword() {
+		return this.password;
+	}
+	public Profile getProfile() {
+		return this.profile;
+	}
+	public Menu getMenu() {
+		return this.menu;
+	}
+	public OrderList getOrderList() {
+		return this.resOrderList;
+	}
+	public void addOrder(Order order) {
+		resOrderList.add(order);
+	}
+	public void edit(String new_username, String new_password, String new_name, String new_phone, String new_location) {
+		this.username = new_username;
+		this.password = new_password;
+		this.profile.setPhone(new_phone);
+		this.profile.setName(new_name);
+		this.profile.setLocation(new_location);
+	}
+	public String get_profile_info() {
+		return this.profile.getName()+"\n"+this.profile.getPhone()+"\n"+this.profile.getLocation();
+	}
+	//for test only!!!!!
+	public  String toString() {
+		return "Restaurant: username-" + this.username+" name-"+profile.getName()+" location-"+profile.getLocation()+ "phone- "+profile.getPhone();
+	}
 }
