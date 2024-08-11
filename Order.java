@@ -24,7 +24,9 @@ public class Order implements Serializable{
 	public void setDestination(String destination) {
 		this.destination = destination;
 	}
-	
+	public ArrayList<OrderItem> getItems() {
+		return items;
+	}
 	
 	//??????????
 	public void add(OrderItem new_oi) {

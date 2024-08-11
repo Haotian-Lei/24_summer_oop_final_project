@@ -2,58 +2,77 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class CustomerGUI extends JFrame {
-    private JButton profileButton;
-    private JButton browseRestaurantButton;
-    private JButton viewHistoryOrderButton;
-    private JButton viewCustomerListButton;  // New button
+    private JButton btnBrowseRest;
+    private JButton btnOrderHistory;
+    private JButton btnProfile;
     private Customer customer;
-
 
     public CustomerGUI(Customer customer) {
         this.customer = customer;
         setTitle("Customer Dashboard");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
 
         // Panel for buttons
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(3, 1)); // 4 buttons
 
-        profileButton = new JButton("Profile");
-        browseRestaurantButton = new JButton("Browse Restaurant");
-        viewHistoryOrderButton = new JButton("View History Order");
-
-        buttonPanel.add(profileButton);
-        buttonPanel.add(browseRestaurantButton);
-        buttonPanel.add(viewHistoryOrderButton);
+        btnProfile = new JButton("Profile");
+        btnBrowseRest = new JButton("Browse Restaurant");
+        btnOrderHistory = new JButton("View History Order");
 
 
-        add(buttonPanel, BorderLayout.WEST);
+        buttonPanel.add(btnProfile);
+        buttonPanel.add(btnBrowseRest);
+        buttonPanel.add(btnOrderHistory);
 
 
-        profileButton.addActionListener(new ActionListener() {
+        // Create a wrapper panel with BorderLayout to center the buttonPanel
+        JPanel wrapperPanel = new JPanel(new BorderLayout());
+        wrapperPanel.add(buttonPanel, BorderLayout.CENTER);
+
+        // Add the wrapper panel to the main frame
+        add(wrapperPanel, BorderLayout.CENTER);
+
+        // Set up action listeners for the buttons
+        btnProfile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new CusProfileGUI(customer).setVisible(true);
+                profile_Clk();
             }
         });
-        browseRestaurantButton.addActionListener(new ActionListener() {
+
+        btnBrowseRest.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new BrowseRestaurantGUI(customer).setVisible(true);
+                browse_Clk();
             }
         });
-        viewHistoryOrderButton.addActionListener(new ActionListener() {
+
+        btnOrderHistory.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new HistoryOrderGUI(customer).setVisible(true);
+                history_Clk();
             }
         });
+
 
     }
 
-    public static void main(String[] args) {
-        TestSetup.main(args);
+    // Method to handle Profile button click
+    public void profile_Clk() {
+        new CusProfileGUI(customer).setVisible(true);
     }
+
+    // Method to handle Browse Restaurant button click
+    public void browse_Clk() {
+        new BrowseRestGUI(customer).setVisible(true);
+    }
+
+    // Method to handle View History Order button click
+    public void history_Clk() {
+        new HistoryOrderGUI(customer).setVisible(true);
+    }
+
+
+
 }

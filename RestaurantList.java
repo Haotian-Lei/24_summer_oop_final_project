@@ -6,7 +6,7 @@ public class RestaurantList implements Serializable{
 	private static RestaurantList instance;
 	private List<Restaurant> restList;
 	
-	private RestaurantList() {
+	public RestaurantList() {
 		//List is interface, we user ArrayList to implement and initialize 
 		this.restList = new ArrayList<>(); 
 	}

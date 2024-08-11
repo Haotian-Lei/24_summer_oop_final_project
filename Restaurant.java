@@ -1,6 +1,6 @@
 import java.io.*;
 
-import selfpart_final_project_oop.Menu;
+
 public class Restaurant implements Serializable {
 	private String username;
 	private String password;

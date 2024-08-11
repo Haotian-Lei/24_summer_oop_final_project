@@ -7,15 +7,13 @@ public class Customer implements Serializable {
 
     private String username;
     private String password;
-    private String phoneNumber;
-    private String location;
+    private Profile profile;
     private List<Order> historyOrderList;
 
-    public Customer(String username, String password, String phoneNumber, String location) {
+    public Customer(String username, String password, Profile profile) {
         this.username = username;
         this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.location = location;
+        this.profile = profile;
         this.historyOrderList = new ArrayList<>();
     }
 
@@ -24,19 +22,23 @@ public class Customer implements Serializable {
     public void setUsername(String username) { this.username = username; }
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
-    public String getPhoneNumber() { return phoneNumber; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
-    public String getLocation() { return location; }
-    public void setLocation(String location) { this.location = location; }
+
+    public Profile getProfile() { return profile; }
+    public void setProfile(Profile profile) { this.profile = profile; }
+
     public List<Order> getHistoryOrderList() { return historyOrderList; }
     public void addOrderToHistory(Order order) {
-        System.out.println("Adding order to history for customer: " + username); // 调试信息
+        System.out.println("Adding order to history for customer: " + username); // Debug info
         if (historyOrderList == null) {
-            System.out.println("historyOrderList is null!"); // 检查列表是否正确初始化
+            System.out.println("historyOrderList is null!"); // Check if the list is properly initialized
         } else {
             historyOrderList.add(order);
-            System.out.println("Order added successfully."); // 确认订单已添加
+            System.out.println("Order added successfully."); // Confirm that the order has been added
         }
     }
 
+    // Additional method to update profile information
+    public void updateProfile(String name, String phone, String location, String vehicle) {
+        this.profile.edit(name, phone, location, vehicle);
+    }
 }

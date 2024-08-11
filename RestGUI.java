@@ -8,10 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import selfpart_final_project_oop.RestMenuGUI;
-import selfpart_final_project_oop.RestOrderGUI;
-import selfpart_final_project_oop.RestProfileGUI;
-import selfpart_final_project_oop.Restaurant;
 
 public class RestGUI extends JFrame {
 

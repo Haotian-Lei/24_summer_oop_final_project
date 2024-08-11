@@ -1,36 +1,22 @@
 import javax.swing.*;
-import java.util.List;
 
 public class TestSetup {
     public static void main(String[] args) {
         // Initialize test data
-        DataStorage.initializeTestData("customers.dat");
+        DataStorage.initializeTestData("customers.dat", "restaurants.dat");
+        // Create CustomerList and RestaurantList instances
+        CustomerList customerList = new CustomerList();
+        RestaurantList restaurantList = new RestaurantList();
+        // Load CustomerList and RestaurantList from DataStorage
+        DataStorage.loadCustomers1("customers.dat",customerList);
+        DataStorage.loadRestaurants1("restaurants.dat",restaurantList);
 
-        // Load customers from file
-        List<Customer> customers = DataStorage.loadCustomers("customers.dat");
-
-        // Find a specific customer by username
-        String usernameToFind = "bob"; // Change this to the username you want to test
-        Customer customerToShow = null;
-        for (Customer customer : customers) {
-            if (customer.getUsername().equals(usernameToFind)) {
-                customerToShow = customer;
-                break;
+        // Launch MainGUI for testing
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                MainGUI mainGUI = new MainGUI(customerList, restaurantList);
+                mainGUI.setVisible(true);
             }
-        }
-
-        if (customerToShow != null) {
-            // Launch CustomerGUI for testing
-            Customer finalCustomerToShow = customerToShow;
-            javax.swing.SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    CustomerGUI customerGUI = new CustomerGUI(finalCustomerToShow);
-                    customerGUI.setVisible(true);
-                }
-            });
-        } else {
-            System.out.println("Customer with username " + usernameToFind + " not found.");
-        }
+        });
     }
 }
-

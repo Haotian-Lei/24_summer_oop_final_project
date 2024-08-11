@@ -1,44 +1,53 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CartGUI extends JFrame {
-    private JList<String> cartList;
-    private DefaultListModel<String> listModel;
-    private JButton removeButton;
-    private JButton payButton;
-    private Cart cart;
+    private JTable tblOrder;
+    private DefaultTableModel tableModel;
+    private JButton btnRemove;
+    private JButton btnPay;
     private Customer customer;
+    private Restaurant restaurant;
+    private Order order;
 
-    public CartGUI(Customer customer, Cart cart) {
+    public CartGUI(Customer customer, Restaurant restaurant, Order order) {
         this.customer = customer;
-        this.cart = cart;
+        this.restaurant = restaurant;
+        this.order = order;
         setTitle("Shopping Cart");
-        setSize(400, 300);
+        setSize(600, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        listModel = new DefaultListModel<>();
-        cartList = new JList<>(listModel);
-        JScrollPane scrollPane = new JScrollPane(cartList);
+        // Initialize the table with columns "Item", "Quantity"
+        String[] columnNames = {"Item", "Quantity"};
+        tableModel = new DefaultTableModel(columnNames, 0);
+        tblOrder = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(tblOrder);
         add(scrollPane, BorderLayout.CENTER);
 
-        removeButton = new JButton("Remove");
-        payButton = new JButton("Pay");
+        // Initialize buttons
+        btnRemove = new JButton("Remove");
+        btnPay = new JButton("Pay");
         JPanel buttonPanel = new JPanel();
-        buttonPanel.add(removeButton);
-        buttonPanel.add(payButton);
+        buttonPanel.add(btnRemove);
+        buttonPanel.add(btnPay);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        removeButton.addActionListener(new ActionListener() {
+        // Populate the table with current order items
+        updateOrderTable();
+
+        // Add action listeners for buttons
+        btnRemove.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int index = cartList.getSelectedIndex();
-                if (index != -1) {
-                    cart.removeItem(index);
-                    updateCartList();
+                int selectedRow = tblOrder.getSelectedRow();
+                if (selectedRow != -1) {
+                    // Remove selected item from the order
+                    order.delete(order.getItems().get(selectedRow));
+                    updateOrderTable();
                     JOptionPane.showMessageDialog(CartGUI.this, "Item removed from cart.");
                 } else {
                     JOptionPane.showMessageDialog(CartGUI.this, "Please select an item to remove.");
@@ -46,73 +55,36 @@ public class CartGUI extends JFrame {
             }
         });
 
-        payButton.addActionListener(new ActionListener() {
+        btnPay.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (cart.getItems().isEmpty()) {
-                    JOptionPane.showMessageDialog(CartGUI.this, "Cart is empty. Cannot place an order.");
-                    return;
-                }
-                List<MenuItem> itemsCopy = new ArrayList<>(cart.getItems());
-
-                // Create an Order with the current cart items
-                Order order = new Order(customer, itemsCopy);
-
-                // Add the order to the customer's history order list
-                customer.addOrderToHistory(order);
-
-                // Debug print after adding to history
-                System.out.println("History Order List after adding the order:");
-                for (Order o : customer.getHistoryOrderList()) {
-                    System.out.println("Order for " + o.getCustomer().getUsername() + ":");
-                    for (MenuItem i : o.getItems()) {
-                        System.out.println("  Item: " + i.getName() + " Price: " + i.getPrice());
-                    }
-                }
-                cart.clear();
-                updateCartList();
-
-
-
-                JOptionPane.showMessageDialog(CartGUI.this, "Order placed and added to history successfully.");
-
-                // Show the customer's history order list
-                displayOrderHistory();
-
-
-                // Optionally, close the CartGUI window
-                dispose();
+                pay_Clk();
             }
         });
-
-        updateCartList();
     }
 
-    private void updateCartList() {
-        listModel.clear();
-        for (MenuItem item : cart.getItems()) {
-            listModel.addElement(item.getName() + " - $" + item.getPrice());
+    // Method to update the order table
+    private void updateOrderTable() {
+        tableModel.setRowCount(0); // Clear existing rows
+        for (OrderItem item : order.getItems()) {
+            tableModel.addRow(new Object[]{item.getName(), item.getQuantity()});
         }
     }
 
-    private void displayOrderHistory() {
-        StringBuilder historyDetails = new StringBuilder();
-        historyDetails.append("Order History:\n");
-
-        for (Order order : customer.getHistoryOrderList()) {
-            historyDetails.append("Order for ").append(order.getCustomer().getUsername()).append(":\n");
-            historyDetails.append("Status: ").append(order.getStatus()).append("\n");
-            for (MenuItem item : order.getItems()) {
-                historyDetails.append("  Item: ").append(item.getName())
-                        .append(" Price: ").append(item.getPrice()).append("\n");
-            }
-            historyDetails.append("\n");
+    // Method to handle Pay button click
+    private void pay_Clk() {
+        if (order.getItems().isEmpty()) {
+            JOptionPane.showMessageDialog(CartGUI.this, "Cart is empty. Cannot place an order.");
+            return;
         }
 
-        // Print to console for debugging
-        System.out.println(historyDetails.toString());
+        // Update order status and add to customer's history order list
+        order.setPaid(); // or another appropriate status
+        customer.addOrderToHistory(order);
 
-        // Show the order history
-        JOptionPane.showMessageDialog(CartGUI.this, historyDetails.toString(), "Order History", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(CartGUI.this, "Order placed and added to history successfully.");
+
+        // Optionally, close the CartGUI window
+        dispose();
     }
 
 

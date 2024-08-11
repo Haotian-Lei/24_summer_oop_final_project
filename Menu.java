@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Menu implements Serializable {
-	private List<MenuItem> menuitems;
+	private final List<MenuItem> menuitems;
 	public Menu() {
 		this.menuitems = new ArrayList<>();
 	}
