@@ -81,7 +81,7 @@ public class CartGUI extends JFrame {
         // Update order status and add to customer's history order list
         order.setPaid(); // or another appropriate status
         order.setDestination(customer.getProfile().getLocation());
-        customer.addOrderToHistory(order);
+        customer.add(order);
         List<Customer> customers = DataStorage.loadCustomers("customers.dat");
         for (int i = 0; i < customers.size(); i++) {
             if (customers.get(i).getUsername().equals(customer.getUsername())) {

@@ -27,7 +27,7 @@ public class Customer implements Serializable {
     public void setProfile(Profile profile) { this.profile = profile; }
 
     public List<Order> getHistoryOrderList() { return historyOrderList; }
-    public void addOrderToHistory(Order order) {
+    public void add(Order order) {
         System.out.println("Adding order to history for customer: " + username); // Debug info
         if (historyOrderList == null) {
             System.out.println("historyOrderList is null!"); // Check if the list is properly initialized
