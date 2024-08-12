@@ -5,13 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class HistoryOrderGUI extends JFrame {
+public class CusOrderHistoryGUI extends JFrame {
     private JTable tblOrderHistory;
     private DefaultTableModel tableModel;
     private JButton btlCheckStatus;
     private Customer customer;
 
-    public HistoryOrderGUI(Customer customer) {
+    public CusOrderHistoryGUI(Customer customer) {
         this.customer = customer;
         setTitle("Order History");
         setSize(600, 400);
@@ -44,9 +44,9 @@ public class HistoryOrderGUI extends JFrame {
                 int selectedRow = tblOrderHistory.getSelectedRow();
                 if (selectedRow != -1) {
                     String status = (String) tableModel.getValueAt(selectedRow, 2);
-                    JOptionPane.showMessageDialog(HistoryOrderGUI.this, "Order Status: " + status);
+                    JOptionPane.showMessageDialog(CusOrderHistoryGUI.this, "Order Status: " + status);
                 } else {
-                    JOptionPane.showMessageDialog(HistoryOrderGUI.this, "Please select an order to check the status.");
+                    JOptionPane.showMessageDialog(CusOrderHistoryGUI.this, "Please select an order to check the status.");
                 }
             }
         });

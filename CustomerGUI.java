@@ -70,7 +70,7 @@ public class CustomerGUI extends JFrame {
 
     // Method to handle View History Order button click
     public void history_Clk() {
-        new HistoryOrderGUI(customer).setVisible(true);
+        new CusOrderHistoryGUI(customer).setVisible(true);
     }
 
 
