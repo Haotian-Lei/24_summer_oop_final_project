@@ -75,7 +75,7 @@ public class EditMenuItemGUI extends JFrame {
 		contentPane.add(btnDelete);
 		
 		btnCancel = new JButton("Cancel");
-		btnDelete.addActionListener(new ActionListener() {
+		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cancel_Clk();
 			}
