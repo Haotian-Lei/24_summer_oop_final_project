@@ -8,6 +8,8 @@
 ## Project Overview
 **Foodiego** is a Java-based GUI food delivery system designed to provide a seamless food ordering and delivery experience for customers. The system supports interactions for three types of users: Customers, Restaurants, and Drivers.
 
+**Important:** All data for the system is stored locally in the directory during runtime. **To fully execute the food ordering process and progress the order status (from paid, to confirmed, to ready for pickup, to on the way, to delivered), users must log in and log out using the appropriate accounts for each step.** This means that different actions require different user roles, such as customer, restaurant, and driver, each needing to be logged in separately.
+
 ### Access Information
 Use the following credentials to access the system:
 
