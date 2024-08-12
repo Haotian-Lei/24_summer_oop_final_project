@@ -136,7 +136,6 @@ public class DriverCurrentOrderGUI extends JFrame {
             }
             DataStorage.saveRestaurants("restaurants.dat", restaurants);
             
-            driver.getOrders().add(selectedOrder);
             List<Driver> drivers = DataStorage.loadDrivers("drivers.dat");
             for (int i = 0; i < drivers.size(); i++) {
                 if (drivers.get(i).getUserName().equals(driver.getUserName())) {

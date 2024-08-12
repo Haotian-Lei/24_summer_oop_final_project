@@ -99,6 +99,7 @@ public class RestNewOrderGUI extends JFrame {
         Order target = this.restaurant.getOrderList().getSingleOrder(rowSelected);
         target.setConfirmed();
         target.setOrigin(restaurant.getProfile().getLocation());
+        tableModel.removeRow(rowSelected);
 
         // Update order status to customers
         List<Customer> customers = DataStorage.loadCustomers("customers.dat");
@@ -112,10 +113,6 @@ public class RestNewOrderGUI extends JFrame {
             }
         }
         DataStorage.saveCustomers(customers, "customers.dat");
-
-        List<Order> waitings = DataStorage.loadWaitAcceptList("waitAcceptList.dat");
-        waitings.add(target);
-        DataStorage.saveWaitAcceptList("waitAcceptList.dat", waitings);
 
         List<Restaurant> restaurants = DataStorage.loadRestaurants("restaurants.dat");
         for (int i = 0; i < restaurants.size(); i++) {
@@ -135,6 +132,7 @@ public class RestNewOrderGUI extends JFrame {
     private void decline_Clk() {
     	Order target = this.restaurant.getOrderList().getSingleOrder(rowSelected);
     	target.setDeclined();
+    	tableModel.removeRow(rowSelected);
     	
     	//update order status to customers
     	List<Customer> customers = DataStorage.loadCustomers("customers.dat");

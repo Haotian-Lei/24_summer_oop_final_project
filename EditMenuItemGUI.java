@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class EditMenuItemGUI extends JFrame {
@@ -84,6 +85,16 @@ public class EditMenuItemGUI extends JFrame {
 	}
 	private void editMenuItem_Clk() {
 		menu.editMenuItem(index,txtName.getText(),Double.parseDouble(txtPrice.getText()));
+		
+		List<Restaurant> restaurants = DataStorage.loadRestaurants("restaurants.dat");
+        for (int i = 0; i < restaurants.size(); i++) {
+            if (restaurants.get(i).getUsername().equals(restaurant.getUsername())) {
+                restaurants.set(i, restaurant);
+                break;
+            }
+        }
+        DataStorage.saveRestaurants("restaurants.dat",restaurants);
+        
 		//after edit, back to prev. gui
 		RestMenuGUI rmgu = new RestMenuGUI(this.restaurant);
 		rmgu.setVisible(true);

@@ -26,6 +26,7 @@ public class Restaurant implements Serializable {
 	public Menu getMenu() {
 		return this.menu;
 	}
+	
 	public OrderList getOrderList() {
 		return this.resOrderList;
 	}

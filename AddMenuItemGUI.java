@@ -1,6 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
+import java.util.*;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -72,13 +72,24 @@ public class AddMenuItemGUI extends JFrame {
 	private void addMenuitem_Clk(String name, double price) {
 		MenuItem mi = new MenuItem(name, price);
 		this.menu.addMenuItem(mi);
+		
+		List<Restaurant> restaurants = DataStorage.loadRestaurants("restaurants.dat");
+        for (int i = 0; i < restaurants.size(); i++) {
+            if (restaurants.get(i).getUsername().equals(restaurant.getUsername())) {
+                restaurants.set(i, restaurant);
+                break;
+            }
+        }
+        DataStorage.saveRestaurants("restaurants.dat",restaurants);
 		//after success add, back to previous gui
 		RestMenuGUI rmgu = new RestMenuGUI(this.restaurant);
 		rmgu.setVisible(true);
+		dispose();
 	}
 	private void cancel_Clk() {
 		RestMenuGUI rmgu = new RestMenuGUI(this.restaurant);
 		rmgu.setVisible(true);
+		dispose();
 	}
 
 }
