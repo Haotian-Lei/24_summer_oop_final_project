@@ -1,9 +1,10 @@
 import javax.swing.*;
 import java.io.*;
 
-public class TestSetup {
+public class Main {
     public static void main(String[] args) {
         // Initialize test data
+        //DataStorage.initializeTestData("customers.dat", "restaurants.dat", "drivers.dat", "waitAcceptList.dat");
     	File f = new File("customers.dat");
     	if(!f.exists()) {
     		DataStorage.initializeTestData("customers.dat", "restaurants.dat", "drivers.dat", "waitAcceptList.dat");
