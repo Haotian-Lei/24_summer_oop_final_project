@@ -50,6 +50,12 @@ public class RestOrderHistoryGUI extends JFrame {
         scrollPane.setBounds(24, 6, 395, 216);
         contentPane.add(scrollPane);
         
+        tblHistoryOrder.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                rowSelected = tblHistoryOrder.getSelectedRow();
+            }
+        });
+        
         btnReadyPickUp = new JButton("Ready for Pickup");
         btnReadyPickUp.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -67,11 +73,6 @@ public class RestOrderHistoryGUI extends JFrame {
         });
         btnCancel.setBounds(237, 234, 117, 29);
         contentPane.add(btnCancel);
-        tblHistoryOrder.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                rowSelected = tblHistoryOrder.getSelectedRow();
-            }
-        });
         
         setVisible(true);
 	}
@@ -88,6 +89,7 @@ public class RestOrderHistoryGUI extends JFrame {
                 Order order = currentOrders.get(j);
                 if (order.equals(target)) {
                     currentOrders.set(j, target);  // Update the correct index
+                    break;
                 }
             }
         }

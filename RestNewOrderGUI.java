@@ -51,6 +51,12 @@ public class RestNewOrderGUI extends JFrame {
         scrollPane.setBounds(24, 6, 395, 216);
         contentPane.add(scrollPane);
         
+        tblNewOrder.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                rowSelected = tblNewOrder.getSelectedRow();
+            }
+        });
+        
         btnAccept = new JButton("Accept");
         btnAccept.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -86,11 +92,6 @@ public class RestNewOrderGUI extends JFrame {
         });
         btnCancel.setBounds(337, 234, 79, 29);
         contentPane.add(btnCancel);
-        tblNewOrder.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                rowSelected = tblNewOrder.getSelectedRow();
-            }
-        });
         
         setVisible(true);
     }
@@ -109,6 +110,7 @@ public class RestNewOrderGUI extends JFrame {
                 Order order = currentOrders.get(j);
                 if (order.equals(target)) {
                     currentOrders.set(j, target);  // Update the correct index
+                    break;
                 }
             }
         }
@@ -142,6 +144,7 @@ public class RestNewOrderGUI extends JFrame {
                 Order order = currentOrders.get(j);
                 if (order.equals(target)) {
                     currentOrders.set(j, target);  // Update the correct index
+                    break;
                 }
             }
         }

@@ -130,6 +130,7 @@ public class WaitAcceptGUI extends JFrame {
                     Order order = currentOrders.get(j);
                     if (order.equals(selectedOrder)) {
                         currentOrders.set(j, selectedOrder);  // Update the correct index
+                        break;
                     }
                 }
             }
@@ -142,7 +143,8 @@ public class WaitAcceptGUI extends JFrame {
                 for (int j = 0; j < currentOrders.size(); j++) {
                     Order order = currentOrders.get(j);
                     if (order.equals(selectedOrder)) {
-                        currentOrders.set(j, selectedOrder);  // Update the correct index
+                        currentOrders.set(j, selectedOrder);// Update the correct index
+                        break;
                     }
                 }
             }
